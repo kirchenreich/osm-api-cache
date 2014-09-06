@@ -17,7 +17,6 @@ Base = declarative_base()
 class OsmBase(Base):
     __abstract__ = True
 
-    pk = Column(BigInteger, primary_key=True)
     created_on = Column(TIMESTAMP, default=func.now())
     updated_on = Column(TIMESTAMP, default=func.now(),
                         onupdate=func.now())
@@ -26,7 +25,7 @@ class OsmBase(Base):
 class Node(OsmBase):
     __tablename__ = 'node'
 
-    id = Column(BigInteger, unique=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=False)
 
     tags = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
@@ -39,7 +38,7 @@ class Node(OsmBase):
 class Way(OsmBase):
     __tablename__ = 'way'
 
-    id = Column(BigInteger, unique=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=False)
 
     tags = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
@@ -49,16 +48,18 @@ class Way(OsmBase):
 class WayMember(OsmBase):
     __tablename__ = 'waymember'
 
-    way_id = Column(BigInteger)
-    node_id = Column(BigInteger)
+    id = Column(BigInteger, primary_key=True, autoincrement=False)
 
-    order = Column(Integer, nullable=True)
+    way_id = Column(BigInteger, index=True)
+    node_id = Column(BigInteger, index=True)
+
+    order = Column(Integer, nullable=True, index=True)
 
 
 class Relation(OsmBase):
     __tablename__ = 'relation'
 
-    id = Column(BigInteger, unique=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=False)
 
     tags = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
@@ -68,11 +69,13 @@ class Relation(OsmBase):
 class RelationMember(OsmBase):
     __tablename__ = 'relationmember'
 
-    relation_id = Column(BigInteger)
+    id = Column(BigInteger, primary_key=True, autoincrement=False)
+
+    relation_id = Column(BigInteger, index=True)
 
     # allowed values: n, w, r
-    element_type = Column(String(1))
-    element_id = Column(BigInteger)
+    element_type = Column(String(1), index=True)
+    element_id = Column(BigInteger, index=True)
 
-    order = Column(Integer, nullable=True)
+    order = Column(Integer, nullable=True, index=True)
     role = Column(String, nullable=True)
