@@ -31,8 +31,8 @@ class Node(OsmBase):
     meta = Column(JSON, nullable=True)
     changeset = Column(BigInteger, nullable=True)
 
-    lat = Column(Numeric(9, 6), nullable=True)
-    lon = Column(Numeric(9, 6), nullable=True)
+    lat = Column(Numeric(11, 8), nullable=True)
+    lon = Column(Numeric(11, 8), nullable=True)
 
 
 class Way(OsmBase):
