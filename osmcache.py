@@ -24,5 +24,20 @@ def initdb():
     click.echo("db created (if needed)")
 
 
+def abort_if_false(ctx, param, value):
+    if not value:
+        ctx.abort()
+
+
+@cli.command()
+@click.option('--yes', is_flag=True, callback=abort_if_false,
+              expose_value=False,
+              prompt='Are you sure you want to drop the db?')
+def dropdb():
+    from models import Base
+    Base.metadata.drop_all(engine)
+    click.echo("all tables dropped")
+
+
 if __name__ == '__main__':
     cli()
