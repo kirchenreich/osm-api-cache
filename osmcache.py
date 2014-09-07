@@ -4,8 +4,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from credentials import POSTGRES_USERNAME, POSTGRES_PASSWORD, POSTGRES_DBNAME
 
-from parser import OSMParser
-
 d = {'NAME': POSTGRES_USERNAME,
      'PASSWORD': POSTGRES_PASSWORD,
      'DBNAME': POSTGRES_DBNAME}
@@ -28,6 +26,7 @@ def initdb():
 @cli.command()
 @click.argument('osm-file', type=click.File('rb'))
 def import_osm(osm_file):
+    from parser import OSMParser
     OSMParser(osm_file).parse()
 
 def abort_if_false(ctx, param, value):
