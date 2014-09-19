@@ -18,8 +18,7 @@ class OsmBase(Base):
     __abstract__ = True
 
     created_on = Column(TIMESTAMP, default=func.now())
-    updated_on = Column(TIMESTAMP, default=func.now(),
-                        onupdate=func.now())
+    updated_on = Column(TIMESTAMP, default=func.now(), onupdate=func.now())
 
 
 class Node(OsmBase):

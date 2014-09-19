@@ -1,3 +1,6 @@
+
+import models
+
 class Node(object):
 
     __slots__ = ('id', 'lat', 'lon', 'version', 'timestamp', 'changeset',
@@ -19,6 +22,19 @@ class Node(object):
     def __setstate__(self, state):
         self.id, self.lat, self.lon, self.version, self.timestamp, \
         self.changeset, self.tags = state
+
+    def to_sqlalchemy_model(self):
+        return models.Node(
+            id=self.id,
+            tags=self.tags,
+            meta={
+                'version': self.version,
+                'timestamp': self.timestamp,
+            },
+            changeset=self.changeset,
+            lat=self.lat,
+            lon=self.lon
+        )
 
 class Way(object):
 
