@@ -1,42 +1,6 @@
 from lxml import etree
 
-
-class Node(object):
-
-    __slots__ = ('id', 'lat', 'lon', 'version', 'timestamp', 'changeset',
-                 'tags')
-
-    def __init__(self, id, lat, lon, version, timestamp, changeset, **kwargs):
-        self.id = id
-        self.lat = lat
-        self.lon = lon
-        self.version = version
-        self.timestamp = timestamp
-        self.changeset = changeset
-        self.tags = {}
-
-class Way(object):
-
-    __slots__ = ('id', 'version', 'timestamp', 'changeset', 'tags', 'nodes')
-
-    def __init__(self, id, version, timestamp, changeset, **kwargs):
-        self.id = id
-        self.version = version
-        self.timestamp = timestamp
-        self.changeset = changeset
-        self.tags = {}
-        self.nodes = []
-
-class Relation(object):
-
-    def __init__(self, id, version, timestamp, changeset, **kwargs):
-        self.id = id
-        self.version = version
-        self.timestamp = timestamp
-        self.changeset = changeset
-
-        self.tags = {}
-        self.members = []
+from .types import Node, Way, Relation
 
 class OSMParser(object):
 
